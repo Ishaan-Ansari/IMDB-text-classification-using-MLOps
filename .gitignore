@@ -90,3 +90,4 @@ target/
 
 creds.txt
 local_s3/
+models/
