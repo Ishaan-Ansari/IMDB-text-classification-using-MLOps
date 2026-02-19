@@ -5,6 +5,7 @@ import os
 import pandas as pd
 from prometheus_client import Counter, Histogram, generate_latest, CollectorRegistry, CONTENT_TYPE_LATEST
 import time
+import numpy as np
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 import string
