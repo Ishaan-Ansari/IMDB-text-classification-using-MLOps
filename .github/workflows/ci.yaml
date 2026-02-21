@@ -41,7 +41,7 @@ jobs:
 
       - name: Run model tests
         env:
-          CAPSTONE_TEST: ${{ secrets.IMDB_TEST_KEY }}
+          IMDB_TEST_KEY: ${{ secrets.IMDB_TEST_KEY }}
         run: |
           python -m unittest tests/test_model.py
 
