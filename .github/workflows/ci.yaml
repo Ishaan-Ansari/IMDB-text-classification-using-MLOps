@@ -6,6 +6,15 @@ jobs:
   project-testing:
     runs-on: ubuntu-latest
 
+    env:
+      IMDB_TEST_KEY: ${{ secrets.IMDB_TEST_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }} # Fixed this line!
+      MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }} 
+      MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }} 
+      MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+
     steps:
       - name: checkout code
         uses: actions/checkout@v4
@@ -28,42 +37,19 @@ jobs:
           pip install -r requirements.txt
         
       - name: run pipeline
-        env:
-          IMDB_TEST_KEY: ${{ secrets.IMDB_TEST_KEY }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-          MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }} 
-          MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }} 
-          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}           
         run: |
           dvc repro
 
       - name: Run model tests
-        env:
-          IMDB_TEST_KEY: ${{ secrets.IMDB_TEST_KEY }}
-          MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }} 
-          MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }} 
-          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}           
         run: |
           python -m unittest tests/test_model.py
 
       - name: Promote model to production
         if: success()
-        env:
-          IMDB_TEST_KEY: ${{ secrets.IMDB_TEST_KEY }}
-          MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }} 
-          MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }} 
-          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}           
         run: python scripts/promote_model.py
 
       - name: Run Flask app tests
         if: success()
-        env:
-          IMDB_TEST_KEY: ${{ secrets.IMDB_TEST_KEY }}
-          MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }} 
-          MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }} 
-          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}           
         run: python -m unittest tests/test_flask_app.py
 
       # - name: Login to AWS ECR
