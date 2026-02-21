@@ -110,6 +110,7 @@ packaging>=24.1
 pandas>=2.2.3
 pathspec>=0.12.1
 pathvalidate>=3.0.0
+python-dotenv
 pillow>=10.4.0
 platformdirs>=3.11.0
 prompt_toolkit>=3.0.47
