@@ -88,6 +88,9 @@ jobs:
         run: |
           kubectl create secret generic capstone-secret \
             --from-literal=IMDB_TEST_KEY="$IMDB_TEST_KEY" \
+            --from-literal=MLFLOW_TRACKING_USERNAME="$MLFLOW_TRACKING_USERNAME" \
+            --from-literal=MLFLOW_TRACKING_PASSWORD="$MLFLOW_TRACKING_PASSWORD" \
+            --from-literal=MLFLOW_TRACKING_URI="$MLFLOW_TRACKING_URI" \
             --dry-run=client -o yaml | kubectl apply -f -
 
       - name: Deploy to EKS

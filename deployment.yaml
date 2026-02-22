@@ -33,6 +33,22 @@ spec:
               name: capstone-secret
               key: IMDB_TEST_KEY
 
+        - name: MLFLOW_TRACKING_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: capstone-secret
+              key: MLFLOW_TRACKING_USERNAME
+        - name: MLFLOW_TRACKING_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: capstone-secret
+              key: MLFLOW_TRACKING_PASSWORD
+        - name: MLFLOW_TRACKING_URI
+          valueFrom:
+            secretKeyRef:
+              name: capstone-secret
+              key: MLFLOW_TRACKING_URI
+
 ---
 apiVersion: v1
 kind: Service
