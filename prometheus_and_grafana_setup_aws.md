@@ -23,7 +23,7 @@ System configuration
 - Open the file for editing: ```sudo nano /etc/prometheus/prometheus.yml```
 - Edit the File:
 
-```
+```YAML
 global:
   scrape_interval: 15s
 
@@ -33,8 +33,8 @@ scrape_configs:
       - targets: ["a6bf6255d5f61470c9782b8955c98271-1409247973.us-east-1.elb.amazonaws.com:5000"]  # Replace with your app's External IP
 ```
 
->> Save the File: ctrl+o -> enter -> ctrl+x \
->> Verify the Changes: ```cat /etc/prometheus/prometheus.yml```
+5.1 Save the File: ctrl+o -> enter -> ctrl+x \
+5.2 Verify the Changes: ```cat /etc/prometheus/prometheus.yml```
 
 6. Locate the Prometheus Binary(Run the following command to find where the prometheus executable is installed):
 which prometheus
