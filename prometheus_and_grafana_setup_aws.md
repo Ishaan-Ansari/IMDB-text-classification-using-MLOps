@@ -42,3 +42,35 @@ This should return the full path to the prometheus binary, such as ```/usr/local
 
 7. Run Prometheus with the config file:
 ```/usr/local/bin/prometheus --config.file=/etc/prometheus/prometheus.yml```
+
+
+---
+
+## Setting up Grafana on AWS
+
+1. Launch and Ubuntu EC2 instance for Prometheus: \
+System configuration 
+    - t3.medium
+    - 20gb disk space (general-purpose SSD) 
+    - Security Group: Allow inbound access on ports: 9090 for Prometheus Web UI, 
+    - 22 for SSH access
+        - ```ssh -i your-key.pem ubuntu@your-ec2-public-ip```
+
+2. Update packages: ```sudo apt update && sudo apt upgrade -y```
+
+3. Download Grafana: ```wget https://dl.grafana.com/oss/release/grafana_10.1.5_amd64.deb``` \
+(Stable version for now; adjust link if necessary)
+
+
+4. Install Grafana: ```sudo apt install ./grafana_10.1.5_amd64.deb -y```
+
+5. Start the Grafana service: ```sudo systemctl start grafana-server```
+
+6. Enable Grafana to start on boot: ```sudo systemctl enable grafana-server```
+
+7. Verify the service is running: ```sudo systemctl status grafana-server```
+
+8. Open Grafana web UI: ```http://<ec2-public-ip>:3000``` (username/pass - admin)
+
+9. Add Prometheus as a Data Source: ```http://54.81.71.206/:9090``` \
+    click - Save and Test | Get started with building dashboards.
